@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from rest_framework import routers
 from bookstore.views import AuthorViewSet, PublisherViewSet, GenreViewSet, BookViewSet, CustomerViewSet, DiscountViewSet, ShipperViewSet, OrderViewSet, OrderDetailsViewSet, ReviewViewSet
-
+from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register(r'authors', AuthorViewSet)
@@ -28,11 +28,12 @@ router.register(r'customers', CustomerViewSet)
 router.register(r'discounts', DiscountViewSet)
 router.register(r'shippers', ShipperViewSet)
 router.register(r'orders', OrderViewSet)
-router.register(r'orderDetailss', OrderDetailsViewSet)
+router.register(r'orderDetails', OrderDetailsViewSet)
 router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
     re_path(r'^', include(router.urls)),
     re_path(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    re_path(r'api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('admin/', admin.site.urls)
 ]
